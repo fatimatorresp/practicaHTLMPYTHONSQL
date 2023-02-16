@@ -1,0 +1,44 @@
+{% extends 'layout.html' %} <!--  extends para extender una plantilla a partir de otra -->
+{% block body %}
+<head>
+    <meta charset="utf-8">
+    <title>Formulario Actualizacion</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/editar.css')}}">
+</head>
+    <body>
+        <section class="form-register">
+            <h3>Formulario Actualizacion Cliente</h3>
+            <form action="/actualizar/{{usuario.dni}}" method='POST'> <!-- El atributo action define la ubicación (URL) donde se envían los datos que el formulario ha recopilado cuando se validan -->
+                <div class="actualizacion1">
+                        <label for="inputdni" class="form-label">DNI</label>
+                        <input class="controls" type="number" pattern=".{8}"  name="dni" placeholder="01234567" id="inputdni" value ="{{usuario.dni}}">  <!-- dni -->
+
+                        <label for="inputname2t" class="form-label">Nombre</label>
+                        <input class="controls" type="text"   name="nombre" placeholder="Nombre" id="inputname2t" value ="{{usuario.nombre}}"> <!-- nombre -->
+        
+                        <label for="inputname3t" class="form-label">Apellido</label>
+                        <input class="controls" type="text"  name="apellido" placeholder="Apellido" id="inputname3t" value ="{{usuario.apellido}}"> <!-- apellido -->
+                </div>
+                <div class="registro2">
+                    <h3>Formulario Actualizacion Vehicular</h3>
+                        <label for="inputname3t" class="form-label">Placa</label>
+                        <input class="controls" type= "text" name="placa" placeholder="placa" id="inputname3t" value ="{{vehiculo.placa}}"> <!-- placa -->
+    
+                        <label for="inputname3t" class="form-label">Marca</label>
+                        <input class="controls" type= "text" name="marca" placeholder="marca" id="inputname3t" value ="{{vehiculo.marca}}"> <!-- placa -->
+                    
+                        <label for="inputname3t" class="form-label">Modelo</label>
+                        <input class="controls" type= "text" name="modelo" placeholder="modelo" id="inputname3t" value ="{{vehiculo.modelo}}"> <!-- placa -->
+                        
+                        <button type="submit" class="btn btn-primary btn-block" style=" padding-left: 2.5rem; padding-right: 2.5rem"> <!-- el boton -->
+                            Save
+                        </button>
+                </div>
+                 
+            </form>
+
+                
+        </section>
+    </body>       
+
+{% endblock %}

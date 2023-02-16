@@ -1,0 +1,39 @@
+
+
+<div class = "row">
+    <div class="col-md-11"> 
+        {% with messages = get_flashed_messages() %} 
+        {% if messages %}
+        {% for message in messages %} 
+            <div class="alert alert-warning alert-dismissible fade show" role="alert"> 
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+  
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Login Estacionamiento</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+        <script src="{{url_for('static', filename='js/error_popup.js')}}"></script>
+    </head>
+    <body>
+        <section class="form-login">
+                <h5>Login Estacionamiento</h5>
+                <form action="/ingresar" method="POST" enctype="multipart/form-data">
+                    <label for="inputdni" class="form-label">DNI</label>
+                    <input class="controls" type="number" pattern=".{8}"  name="dni" placeholder="DNI" id="inputdni" value ="">  
+                
+                    <label for="inputPassword4" class="form-label">Contraseña</label>
+                    <input class="controls" type= "Password" name="contraseña" placeholder="Contraseña" id="inputPassword4" value =""> 
+                    <input class="buttons" type="submit" name="" value="Ingresar">
+                    <p><a href="#">¿Olvidaste tu Contraseña?</a></p>
+                </form>
+        </section>
+    </body>
+</html>

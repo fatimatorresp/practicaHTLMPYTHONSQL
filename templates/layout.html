@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- # letra menu  -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estacionamiento</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://bootswatch.com/5/zephyr/bootstrap.css">
+    <link rel="stylesheet" href="https://bootswatch.com/_vendor/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+
+
+<div class = "row"><!-- El elemento HTML fila de tabla (table row) <tr> define una fila de celdas en una tabla. Estas pueden ser una mezcla de elementos <td> y <th> -->
+  <div class="col-md-11"> <!-- columnas  Permite especificar propiedades para una columna o un grupo de ellas -->
+      {% with messages = get_flashed_messages() %} <!-- # obtengo los mensajes q envia el servidor -->
+      {% if messages %}<!--  # si existen mensajes -->
+      {% for message in messages %} <!-- # se recorre -->
+      <!-- # mostrar mensaje -->
+          <div class="alert alert-warning alert-dismissible fade show" role="alert"> <!-- mensaje que se manda al usuario -->
+              {{message}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <!-- # el menu -->
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Estacionamiento</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link" href="http://127.0.0.1:5000/inicio">Inicio</a>
+              <a class="nav-link" href="http://127.0.0.1:5000/listado">Lista de Usuarios</a>
+              <a class="nav-link" href="http://127.0.0.1:5000/registrar">Registrar Usuarios</a>
+             
+            </div>
+          </div>
+        </div>
+      </nav>
+    <div class = "container pt-3" > <!-- # espacio de arriba -->
+    {% block body %}
+    {% endblock %}
+    </div>
+
+    <!-- scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script> 
+    <script src="{{url_for('static', filename='js/error_popup.js')}}"></script>
+</body>
+</html>

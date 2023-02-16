@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   }
+
+   .form-ingreso h3 {
+    font-size: 25px;
+    margin-bottom: 25px;
+  }
+
+  .ingreso  {
+    font-size: 19px;
+    margin-bottom: 19px;
+  }
+  .ingreso2  {
+    font-size: 19px;
+    margin-bottom: 19px;
+  }
+
+  .controls {
+    width: 100%;
+    background: #e7f5f5;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    border: 1px solid #1f53c5;
+    font-family: 'calibri';
+    font-size: 18px;
+    color: rgb(20, 15, 15);
+  }
+  
+  .form-ingreso {
+    width: 400px;
+    background: #a19994;
+    padding: 30px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 4px;
+    font-family: 'calibri';
+    color: white;
+    box-shadow: 7px 13px 37px rgb(6, 5, 5);
+  }

@@ -1,0 +1,41 @@
+{% extends 'layout.html' %} <!--  extends para extender una plantilla a partir de otra -->
+{% block body %}
+    <head>
+        <meta charset="utf-8">
+        <title>Formulario Registro</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/registrar.css')}}">
+    </head>
+    <body>
+        <section class="form-register">
+            <h3>Formulario Registro Cliente</h3>
+            <form action="/submitRegistro" method="POST">
+                <div class="registro1">
+                    <label for="inputdni" class="form-label">DNI</label>
+                    <input class="controls" type="number" pattern=".{8}"  name="dni" placeholder="DNI" id="inputdni">  <!-- dni -->
+
+                    <label for="inputname2t" class="form-label">Nombre</label>
+                    <input class="controls" type="text"   name="nombre" placeholder="Nombre" id="inputname2t"> <!-- nombre -->
+
+                    <label for="inputname3t" class="form-label">Apellido</label>
+                    <input class="controls" type="text"  name="apellido" placeholder="Apellido" id="inputname3t"> <!-- apellido -->
+                </div>
+                <div class="registro2">
+                <h3>Formulario Registro Vehicular</h3>
+                    <label for="inputdni" class="form-label">Placa</label>
+                    <input class="controls" type="text" pattern=".{7}"  name="placa" placeholder="Placa" id="inputplaca"> 
+
+                    <label for="inputname2t" class="form-label">Marca</label>
+                    <input class="controls" type="text"   name="marca" placeholder="Marca" id="inputname2t"> 
+
+                    <label for="inputname3t" class="form-label">Modelo</label>
+                    <input class="controls" type="text"  name="modelo" placeholder="Modelo" id="inputname3t"> 
+
+                    <input class="buttons" type="submit" name="" value="Guardar">
+                </div>             
+            </form>
+        </section>
+    </body>
+
+
+
+{% endblock %}
