@@ -11,41 +11,42 @@
   <link rel="stylesheet" href="{{url_for('static', filename='css/inicio.css')}}">
   <title>Estacionamiento Venezia</title>
 </head>
-    <body> 
-        <section class="form-ingreso"> 
-            <form action="/ingresarVehiculo" method='POST'>
+        <!-- <body> 
+            <form action="/ingresarEntrada" method='POST'>
                 <section>
                     <div class="ingreso">
                         <p>Estacionamiento Venezia</p>
                         <h3>Ingreso Cliente</h3>
                         <label for="inputdni" class="form-label">DNI</label>
                         <input class="controls" type="number" pattern=".{8}"  name="dni"  id="inputdni" value="{{ dni }}"  required> 
-                        <input class="buttons" type="submit" name="" value="Buscar"  >
-                    </div>
-                    
-                        <form action="/ingresarVehiculo" method="get">
-                            <div class="ingreso2">
-                            <label for="placa" class="form-label" >PLACA</label>
-                            <input class="controls" type="text" id="placa" name="placa" value ="{{vehiculo.placa if vehiculo else ''}}">
-                            <input type="hidden" id="fecha" name="fecha" value="{{fecha}}">
-                            <input type="hidden" id="hora" name="hora" value="{{hora}}">
-                            <label for="inputid" class="form-label"> ID </label>
-                            <input class="controls" type="number" pattern=".{3}"  name="id_estacionamiento"  id="id_estacionamiento" value="{{ id_estacionamiento }}" > 
-    
-                            </div>
-                        </form>
-                        
-                    
+                        <input type="hidden" name="action" value="entrada">
+                        <input class="buttons" type="submit" name="submit" value="Entrada" formaction="/ingresarEntrada">
+                    </div>>
+                <form action="/ingresarSalida" method='POST'>
+                    <div class="actualizacion">
+                        <input type="hidden" name="action" value="salida">
+                        <input class="buttons" type="submit" name="submit" value="Salida" formaction="/ingresarSalida">
+                    </div>          
                 </section>
-                <script>
-                    var fecha = new Date();
-                    var fechaInput = document.getElementById("fecha");
-                    fechaInput.value = fecha.toLocaleDateString();
-                    var horaInput = document.getElementById("hora");
-                    horaInput.value = fecha.toLocaleTimeString();
-                </script>
             </form>
-        </section>
-    </body>
+        </body> -->
+ <body> 
+            <section class="form-ingreso"> 
+                <form action="/ingresarVehiculo" method='POST'>
+                    <section>
+                        <div class="ingreso">
+                            <p>Estacionamiento Venezia</p>
+                            <h3>Ingreso Cliente</h3>
+                            <label for="inputdni" class="form-label">DNI</label>
+                            <input class="controls" type="number" pattern=".{8}"  name="dni"  id="inputdni" value="{{ dni }}"  required> 
+                            <input class="buttons" type="submit" name="action" value="Entrada" formaction="/ingresarEntrada">
+                            <input class="buttons" type="submit" name="action" value="Salida" formaction="/ingresarSalida">
+                        </div>          
+                  </section>
+                </form>
+            </section>
+    </body> 
+
 </html>
-{% endblock %}
+
+{%  endblock %}

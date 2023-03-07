@@ -1,0 +1,31 @@
+{% extends 'layout.html' %} 
+{% block body %}
+
+<div class="col-md-6 "> 
+    <table class="table table-striped table-bordered bg-white table-sm">
+        <thead>
+            <tr>
+                <th>DNI</th>
+                <th>Placa</th>
+                <th>fechaInicio</th>
+                <th>horaEntrada</th>
+                <th>fechaFin</th>
+                <th>horaSalida</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for estacionamiento in practica %}
+                <tr>
+                    <td>{{ estacionamiento.dni }}</td>
+                    <td>{{ estacionamiento.placa }}</td>
+                    <td>{{ estacionamiento.fechaInicio}}</td>
+                    <td>{{ estacionamiento.horaEntrada}}</td>
+                    <td>{{ estacionamiento.fechaFin}}</td>
+                    <td>{{ estacionamiento.horaSalida}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>  
+</div>
+{%  endblock %}

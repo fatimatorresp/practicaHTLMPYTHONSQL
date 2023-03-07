@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect,url_for, flash,  session
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime,date
 
 app = Flask(__name__) 
 app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://root@127.0.0.1/practica'
@@ -34,20 +34,24 @@ class Vehiculo(db.Model):
 class Estacionamiento(db.Model):
     placa = db.Column(db.String, db.ForeignKey("vehiculo.placa"))
     dni = db.Column(db.Integer, db.ForeignKey("usuario.dni"))
-    fechainicio = db.Column(db.Date, nullable=False)
-    fechafin = db.Column(db.Date, nullable=False)
+    fechaInicio = db.Column(db.Date, nullable=False)
+    fechaFin = db.Column(db.Date,  nullable=True)
     horaEntrada = db.Column(db.Time, nullable=False)
-    horaSalida = db.Column(db.Time, nullable=False)
-    id_estacionamiento = db.Column(db.Integer, primary_key=True)
+    horaSalida = db.Column(db.Time, nullable=True)
+    id_estacionamiento = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
-    def __init__(self,placa,dni,fechainicio,fechafin,horaEntrada,horaSalida,id_estacionamiento):
-        self.placa= placa
-        self.dni= dni
-        self.fechainicio= fechainicio
-        self.fechafin= fechafin
-        self.horaEntrada= horaEntrada
-        self.horaSalida= horaSalida
-        self.id_estacionamiento= id_estacionamiento
+    def __init__(self, placa, dni, horaEntrada, horaSalida= None, fechaFin=None):
+        self.placa = placa
+        self.dni = dni
+        # self.fechaInicio = fechaInicio
+        self.fechaFin = None
+        self.horaEntrada = horaEntrada
+        self.horaSalida = None
+
+
+
+    
+
 
 @app.route('/')
 def index():
@@ -90,6 +94,7 @@ def registro():
         db.session.close()
         flash('Vehiculo Registrado')
         return redirect(url_for('listado')) 
+        
 
 
 
@@ -144,22 +149,63 @@ def Eliminar(dni):
     return redirect(url_for('listado'))
 
 # metodos Estacionamiento
+@app.route('/ingresarEntrada', methods=['POST'])
+def ingresarEntrada():
+    dni = request.form['dni']
+    action = request.form['action']
+    vehiculo = db.session.query(Vehiculo).filter_by(dni=dni).first()
+    if vehiculo:
+        # Comprobar si ya hay un registro activo para este vehículo
+        registro_activo = db.session.query(Estacionamiento).filter_by(dni=dni, horaSalida=None).first()
+        if registro_activo:
+            flash('Este vehículo ya tiene un registro activo.')
+        else:
+            now = datetime.now()
+            fechaInicio = date.today()
+            horaEntrada = now.strftime("%H:%M:%S")
+            nuevoIngresoVehiculo = Estacionamiento(
+                placa=vehiculo.placa,
+                dni=dni,
+                # fechaInicio=fechaInicio,
+                horaEntrada=horaEntrada,
+                # fechaFin=None,
+                horaSalida=None
+            )
+            db.session.add(nuevoIngresoVehiculo)
+            db.session.commit()
+            flash('Registro de entrada exitoso')
+    else:
+        flash('No se encuentra el usuario')
+    return redirect(url_for('listadoEsta'))
+
+@app.route('/ingresarSalida', methods=['POST'])
+def ingresarSalida():
+    dni = request.form['dni']
+    action = request.form['action']
+    vehiculo = db.session.query(Vehiculo).filter_by(dni=dni).first()
+    if vehiculo:
+        registro_activo = db.session.query(Estacionamiento).filter_by(dni=dni, horaSalida=None,fechaFin=None).first()
+        if registro_activo:
+            now = datetime.now()
+            fechaFin = date.today()
+            horaSalida = now.strftime("%H:%M:%S")
+            registro_activo.fechaFin = fechaFin
+            registro_activo.horaSalida = horaSalida
+            db.session.commit()
+            flash('Registro de salida exitoso')
+        else:
+            flash('No se encontró registro de entrada correspondiente')
+    else:
+        flash('No se encuentra el usuario')
+    return redirect(url_for('listadoEsta'))
 
 
-
-@app.route('/ingresarVehiculo', methods=['GET', 'POST'])
-def ingresarVehiculo():
-    if request.method == 'POST':
-        dni = request.form['dni']
-        id_estacionamiento = request.form['id_estacionamiento']
-        fech
-        vehiculo = db.session.query(Vehiculo).filter_by(dni=dni).first()  # Obtener el vehículo de la base de datos
-        now = datetime.now()
-        fecha = now.strftime("%d/%m/%Y")
-        hora = now.strftime("%H:%M:%S")
-        db.session.commit()
-        return render_template('inicio.html',dni=dni,  vehiculo=vehiculo, fecha=fecha,hora=hora,id_estacionamiento= id_estacionamiento)  # Renderizar la plantilla y pasar el vehículo como parámetro
-
+@app.route('/listadoEsta') #listado de todos los clientes
+def listadoEsta():   
+    resultado= db.session.query(Estacionamiento).all()
+    return render_template('listadoEsta.html', practica=resultado)
+   
+    
 
 if __name__ == '__main__':
     toolbar = DebugToolbarExtension(app)
